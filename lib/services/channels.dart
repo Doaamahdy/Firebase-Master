@@ -36,7 +36,6 @@ class ChannelService extends GetxController {
           backgroundColor: Colors.green.withOpacity(0.1),
           colorText: Colors.green);
     } catch (error, stacktrace) {
-      print("Error: $error, StackTrace: $stacktrace");
       Get.snackbar("Error", "Unable to add the channel. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -53,7 +52,6 @@ class ChannelService extends GetxController {
             id: doc.id);
       }).toList();
     } catch (error, stacktrace) {
-      print("Error: $error, StackTrace: $stacktrace");
       Get.snackbar("Error", "Unable to fetch channels. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -82,7 +80,6 @@ class ChannelService extends GetxController {
           backgroundColor: Colors.green.withOpacity(0.1),
           colorText: Colors.green);
     } catch (error, stacktrace) {
-      print("Error: $error, StackTrace: $stacktrace");
       Get.snackbar("Error", "Unable to delete the channel. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -105,7 +102,6 @@ class ChannelService extends GetxController {
         return null;
       }
     } catch (error, stacktrace) {
-      print("Error: $error, StackTrace: $stacktrace");
       Get.snackbar("Error", "Unable to fetch the channel. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -117,33 +113,7 @@ class ChannelService extends GetxController {
   // Function to subscribe to a channel/topic
   void _subscribeToChannel(String channelId) async {
     await FirebaseMessaging.instance.subscribeToTopic(channelId);
-    print('Subscribed to channel: $channelId');
   }
-
-  // Subscribe to a channel
-  // Future<void> subscribeToChannel(String userId, String channelId) async {
-  //   try {
-  //     DocumentReference userDoc = _db.collection('Users').doc(userId);
-
-  //     await userDoc.update({
-  //       'subscribedChannelIds': FieldValue.arrayUnion([channelId]),
-  //     });
-
-  //     // Subscribe user to FCM topic
-  //     _subscribeToChannel(channelId);
-
-  //     Get.snackbar("Success", "You have subscribed to the channel.",
-  //         snackPosition: SnackPosition.BOTTOM,
-  //         backgroundColor: Colors.green.withOpacity(0.1),
-  //         colorText: Colors.green);
-  //   } catch (error, stacktrace) {
-  //     print("Error: $error, StackTrace: $stacktrace");
-  //     Get.snackbar("Error", "Unable to subscribe to the channel. Try again.",
-  //         snackPosition: SnackPosition.BOTTOM,
-  //         backgroundColor: Colors.redAccent.withOpacity(0.1),
-  //         colorText: Colors.red);
-  //   }
-  // }
 
   Future<void> subscribeToChannel(String userId, String channelId) async {
     try {
@@ -166,10 +136,8 @@ class ChannelService extends GetxController {
         },
       ).then((value) {
         // This will be executed after the event is logged successfully
-        print("Event logged: user_subscribed");
       }).catchError((error) {
         // If there is an error while logging the event
-        print("Error logging event: $error");
       });
 
       Get.snackbar("Success", "You have subscribed to the channel.",
@@ -177,7 +145,6 @@ class ChannelService extends GetxController {
           backgroundColor: Colors.green.withOpacity(0.1),
           colorText: Colors.green);
     } catch (error, stacktrace) {
-      print("Error: $error, StackTrace: $stacktrace");
       Get.snackbar("Error", "Unable to subscribe to the channel. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -211,7 +178,6 @@ class ChannelService extends GetxController {
           backgroundColor: Colors.green.withOpacity(0.1),
           colorText: Colors.green);
     } catch (error, stacktrace) {
-      print("Error: $error, StackTrace: $stacktrace");
       Get.snackbar(
           "Error", "Unable to unsubscribe from the channel. Try again.",
           snackPosition: SnackPosition.BOTTOM,
@@ -220,29 +186,5 @@ class ChannelService extends GetxController {
     }
   }
 
-  // Unsubscribe from a channel
-  // Future<void> unsubscribeFromChannel(String userId, String channelId) async {
-  //   try {
-  //     DocumentReference userDoc = _db.collection('Users').doc(userId);
-
-  //     await userDoc.update({
-  //       'subscribedChannelIds': FieldValue.arrayRemove([channelId]),
-  //     });
-
-  //     // Unsubscribe user from FCM topic
-  //     await FirebaseMessaging.instance.unsubscribeFromTopic(channelId);
-
-  //     Get.snackbar("Success", "You have unsubscribed from the channel.",
-  //         snackPosition: SnackPosition.BOTTOM,
-  //         backgroundColor: Colors.green.withOpacity(0.1),
-  //         colorText: Colors.green);
-  //   } catch (error, stacktrace) {
-  //     print("Error: $error, StackTrace: $stacktrace");
-  //     Get.snackbar(
-  //         "Error", "Unable to unsubscribe from the channel. Try again.",
-  //         snackPosition: SnackPosition.BOTTOM,
-  //         backgroundColor: Colors.redAccent.withOpacity(0.1),
-  //         colorText: Colors.red);
-  //   }
-  // }
+  
 }

@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:my_app_1/models/user.dart';
 import 'package:my_app_1/pages/Home.dart';
 import 'package:my_app_1/pages/login.dart';
@@ -26,7 +25,7 @@ class AuthService {
       }
 
       // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth =
+      final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 
       // Create a new credential
@@ -62,13 +61,12 @@ class AuthService {
       }
 
       final displayName = user?.displayName; // Get the username
-      print("Userrrrrrrrname  $displayName");
 
       // Navigate to Home after successful sign-in
       Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
           context, MaterialPageRoute(builder: (context) => const Home()));
     } catch (e) {
-      print("Error during Google Sign-In: $e");
       Get.snackbar("Error", "Failed to sign in with Google.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -101,6 +99,7 @@ class AuthService {
 
         // Navigate to Home after successful registration
         await Future.delayed(const Duration(seconds: 1));
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (BuildContext context) => const Home()));
       }
@@ -108,14 +107,10 @@ class AuthService {
       String message = '';
       if (e.code == 'weak-password') {
         message = 'The password provided is too weak.';
-        print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         message = 'An account already exists with that email.';
-        print('An account already exists with that email.');
       } else {
-        print(email);
         message = 'Something went wrong while signing you up.';
-        print('Something went wrong during signup');
       }
 
       Fluttertoast.showToast(
@@ -138,6 +133,7 @@ class AuthService {
           .signInWithEmailAndPassword(email: email, password: password);
 
       await Future.delayed(const Duration(seconds: 1));
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) => const Home()));
     } on FirebaseAuthException catch (e) {
@@ -164,6 +160,7 @@ class AuthService {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
     Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context, MaterialPageRoute(builder: (BuildContext context) => Login()));
   }
 }

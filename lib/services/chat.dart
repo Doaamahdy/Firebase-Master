@@ -59,7 +59,6 @@ class MessageService extends GetxController {
       analytics
           .logPushMessageEvent(userId: email, content: message.text!)
           .then((val) {
-        print("pushing Message Event");
       });
 
       // Show success message
