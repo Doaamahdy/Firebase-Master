@@ -40,11 +40,9 @@ class _ChannelsPageState extends State<ChannelsPage> {
     try {
       final user = FirebaseAuth.instance.currentUser;
       final email = user?.email;
-      print(user?.email);
       if (email == null) {
         throw Exception("User is not authenticated");
       }
-      print("HHHHHHHHo");
 
       final querySnapshot = await firestore
           .collection('Users')

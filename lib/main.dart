@@ -54,7 +54,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // String? token = await FirebaseMessaging.instance.getToken();
-  // print('Firebase Token: $token');
 
   // Initialize local notifications
   await initializeLocalNotifications();

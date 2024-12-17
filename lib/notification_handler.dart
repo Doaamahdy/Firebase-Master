@@ -13,12 +13,7 @@ void foregroundNotificationHandler(RemoteMessage message) async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-
-    print("Notification received:");
-    print("Title: ${message.notification?.title}");
-    print("Body: ${message.notification?.body}");
-    print("Sent Time: ${message.sentTime}");
-
+   
     // Save message to Firebase Realtime Database
     DatabaseReference messagesRef = FirebaseDatabase.instance.ref("messages");
     await messagesRef.push().set({
@@ -35,7 +30,7 @@ void foregroundNotificationHandler(RemoteMessage message) async {
         0, // Notification ID
         message.notification!.title, // Title
         message.notification!.body, // Body
-        NotificationDetails(
+        const NotificationDetails(
           android: AndroidNotificationDetails(
             'default_channel_id', // Channel ID
             'Default Channel', // Channel Name
@@ -61,11 +56,6 @@ Future<void> backgroundNotificationHandler(RemoteMessage message) async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    print("Background Notification received:");
-    print("Title: ${message.notification?.title}");
-    print("Body: ${message.notification?.body}");
-    print("Sent Time: ${message.sentTime}");
-
     DatabaseReference notificationsRef =
     FirebaseDatabase.instance.ref("notifications");
     await notificationsRef.push().set({
@@ -74,8 +64,7 @@ Future<void> backgroundNotificationHandler(RemoteMessage message) async {
       'date': message.sentTime?.toString() ?? "No date",
     });
 
-    print("Notification saved to Firebase");
+  // ignore: empty_catches
   } catch (e) {
-    print("Error saving background notification: ${e.toString()}");
   }
 }
