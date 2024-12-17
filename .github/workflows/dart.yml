@@ -19,7 +19,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.16.0" # Use a Flutter version that includes Dart 3.5.4 or higher
+          flutter-version: "3.24.5" # Use a Flutter version that includes Dart 3.5.4 or higher
 
       # Step 3: Verify Flutter and Dart versions
       - name: Verify Flutter version
