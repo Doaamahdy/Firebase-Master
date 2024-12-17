@@ -11,28 +11,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
+      # Step 1: Checkout the project code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Set up Flutter
-      - name: Setup Flutter
+      # Step 2: Set up Flutter SDK
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.10.0" # Specify the Flutter version you want to use
+          flutter-version: "3.10.0" # You can specify the Flutter version
 
-      # Step 3: Install dependencies
+      # Step 3: Install project dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # Step 4: Analyze the project source
+      # Step 4: Analyze the Flutter project source
       - name: Analyze project source
         run: flutter analyze
 
-      # Step 5: Run tests
+      # Step 5: Run Flutter tests
       - name: Run Flutter tests
         run: flutter test
 
-      # Optional: Verify formatting (uncomment if needed)
+      # Optional: Verify code formatting
       # - name: Verify formatting
       #   run: flutter format --set-exit-if-changed .
