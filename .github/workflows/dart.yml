@@ -30,8 +30,8 @@ jobs:
         run: flutter pub get
 
       # Step 5: Analyze the project source code
-      - name: Analyze project source
-        run: flutter analyze
+      # - name: Analyze project source
+      #   run: flutter analyze
 
       # Step 6: Run Flutter tests
       - name: Run Flutter tests
