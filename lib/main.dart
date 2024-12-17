@@ -38,10 +38,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_app_1/pages/splash.dart';
 import 'package:my_app_1/services/chat.dart';
-
 import 'package:my_app_1/services/notifications.dart';
-import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
-
 import 'firebase_options.dart';
 
 // Create an instance of the FlutterLocalNotificationsPlugin
