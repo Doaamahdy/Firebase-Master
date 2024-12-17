@@ -1,0 +1,14 @@
+{
+  "modules": [
+    {
+      "name": "app",
+      "path": "f:\\Cloud computing\\my_app_1\\android\\app\\",
+      "sources": [
+        "f:\\Cloud computing\\my_app_1\\android\\app\\src\\main\\java\\io\\flutter\\plugins\\GeneratedPluginRegistrant.java"
+      ],
+      "testSources": [],
+      "generatedSources": [],
+      "classpath": []
+    }
+  ]
+}
