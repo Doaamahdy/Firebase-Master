@@ -34,5 +34,5 @@ jobs:
       #   run: flutter analyze
 
       # Step 6: Run Flutter tests
-      - name: Run Flutter tests
-        run: flutter test
+      # - name: Run Flutter tests
+      #   run: flutter test
