@@ -21,8 +21,7 @@ class UserService extends GetxController {
 
       // Return true if a matching document exists, otherwise false
       return snapshot.docs.isNotEmpty;
-    } catch (error, stacktrace) {
-      print("Error: $error, StackTrace: $stacktrace");
+    } catch (error) {
       Get.snackbar("Error", "Unable to verify email.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -45,20 +44,18 @@ class UserService extends GetxController {
             colorText: Colors.green);
       });
 
-      _analytics.logEvent(
-        name: 'first_login',
-        parameters: {
-          'user_id': user.email ?? 'Unknown',
-          'display_name': user.username ?? 'Unknown',
-        },
-      ).then((val) {
-        print("Singin up new User");
-      }).catchError((err) {
-        print("Error Singing up new user");
-      });
-    } catch (error, stacktrace) {
+      _analytics
+          .logEvent(
+            name: 'first_login',
+            parameters: {
+              'user_id': user.email ?? 'Unknown',
+              'display_name': user.username ?? 'Unknown',
+            },
+          )
+          .then((val) {})
+          .catchError((err) {});
+    } catch (error) {
       // Show error message if something goes wrong
-      print("Error: $error, StackTrace: $stacktrace");
       Future.delayed(Duration.zero, () {
         Get.snackbar("Error", "Something went wrong. Try again.",
             snackPosition: SnackPosition.BOTTOM,
@@ -76,8 +73,7 @@ class UserService extends GetxController {
         return UserModel.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
       return usersList;
-    } catch (error, stacktrace) {
-      print("Error: $error, StackTrace: $stacktrace");
+    } catch (error) {
       Get.snackbar("Error", "Unable to fetch users.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -96,9 +92,8 @@ class UserService extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green.withOpacity(0.1),
           colorText: Colors.green);
-    } catch (error, stacktrace) {
+    } catch (error) {
       // Show error message if something goes wrong
-      print("Error: $error, StackTrace: $stacktrace");
       Get.snackbar("Error", "Something went wrong. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),

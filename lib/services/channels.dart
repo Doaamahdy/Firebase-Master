@@ -35,7 +35,7 @@ class ChannelService extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green.withOpacity(0.1),
           colorText: Colors.green);
-    } catch (error, stacktrace) {
+    } catch (error) {
       Get.snackbar("Error", "Unable to add the channel. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -51,7 +51,7 @@ class ChannelService extends GetxController {
         return ChannelModel.fromJson(doc.data() as Map<String, dynamic>,
             id: doc.id);
       }).toList();
-    } catch (error, stacktrace) {
+    } catch (error) {
       Get.snackbar("Error", "Unable to fetch channels. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -79,7 +79,7 @@ class ChannelService extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green.withOpacity(0.1),
           colorText: Colors.green);
-    } catch (error, stacktrace) {
+    } catch (error) {
       Get.snackbar("Error", "Unable to delete the channel. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -101,18 +101,13 @@ class ChannelService extends GetxController {
             colorText: Colors.red);
         return null;
       }
-    } catch (error, stacktrace) {
+    } catch (error) {
       Get.snackbar("Error", "Unable to fetch the channel. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
           colorText: Colors.red);
       return null;
     }
-  }
-
-  // Function to subscribe to a channel/topic
-  void _subscribeToChannel(String channelId) async {
-    await FirebaseMessaging.instance.subscribeToTopic(channelId);
   }
 
   Future<void> subscribeToChannel(String userId, String channelId) async {
@@ -144,7 +139,7 @@ class ChannelService extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green.withOpacity(0.1),
           colorText: Colors.green);
-    } catch (error, stacktrace) {
+    } catch (error) {
       Get.snackbar("Error", "Unable to subscribe to the channel. Try again.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
@@ -177,7 +172,7 @@ class ChannelService extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green.withOpacity(0.1),
           colorText: Colors.green);
-    } catch (error, stacktrace) {
+    } catch (error) {
       Get.snackbar(
           "Error", "Unable to unsubscribe from the channel. Try again.",
           snackPosition: SnackPosition.BOTTOM,
@@ -185,6 +180,4 @@ class ChannelService extends GetxController {
           colorText: Colors.red);
     }
   }
-
-  
 }

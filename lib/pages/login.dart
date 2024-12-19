@@ -15,243 +15,188 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background gradient
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFFE6EFF9),
-                  Color(0xFFAFD6FF),
-                ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF1A237E),
+              Color(0xFF3949AB),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _backButton(context),
+                const SizedBox(height: 40),
+                _headerText(),
+                const SizedBox(height: 40),
+                _emailField(),
+                const SizedBox(height: 20),
+                _passwordField(),
+                const SizedBox(height: 40),
+                _signInButton(context),
+                const SizedBox(height: 20),
+                _googleSignInButton(context),
+                const SizedBox(height: 20),
+                _phoneSignInButton(context),
+                const SizedBox(height: 40),
+                _signUpText(context),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _backButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.pop(context),
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.2),
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+      ),
+    );
+  }
+
+  Widget _headerText() {
+    return Text(
+      'Welcome Back',
+      style: GoogleFonts.poppins(
+        textStyle: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 32,
+        ),
+      ),
+    );
+  }
+
+  Widget _emailField() {
+    return _inputField(
+      controller: _emailController,
+      hintText: 'Email Address',
+      icon: Icons.email_outlined,
+    );
+  }
+
+  Widget _passwordField() {
+    return _inputField(
+      controller: _passwordController,
+      hintText: 'Password',
+      icon: Icons.lock_outline,
+      isPassword: true,
+    );
+  }
+
+  Widget _inputField({
+    required TextEditingController controller,
+    required String hintText,
+    required IconData icon,
+    bool isPassword = false,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: TextField(
+        controller: controller,
+        obscureText: isPassword,
+        style: const TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon, color: Colors.white70),
+          hintText: hintText,
+          hintStyle: const TextStyle(color: Colors.white70),
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        ),
+      ),
+    );
+  }
+
+  Widget _signInButton(BuildContext context) {
+    return _actionButton(
+      text: "Sign In",
+      onPressed: () async {
+        await AuthService().signin(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+          context: context,
+        );
+      },
+    );
+  }
+
+  Widget _googleSignInButton(BuildContext context) {
+    return _actionButton(
+      text: "Sign In With Google",
+      onPressed: () async {
+        await AuthService().signInWithGoogle(context: context);
+      },
+      icon: Icons.g_mobiledata,
+    );
+  }
+
+  Widget _phoneSignInButton(BuildContext context) {
+    return _actionButton(
+      text: "Sign In With Phone",
+      onPressed: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (BuildContext context) => PhoneAuthPage()),
+        );
+      },
+      icon: Icons.phone,
+    );
+  }
+
+  Widget _actionButton({required String text, required VoidCallback onPressed, IconData? icon}) {
+    return SizedBox(
+      width: double.infinity,
+      height: 56,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          elevation: 0,
+        ),
+        onPressed: onPressed,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, color: const Color(0xFF1A237E), size: 24),
+              const SizedBox(width: 8),
+            ],
+            Text(
+              text,
+              style: GoogleFonts.poppins(
+                textStyle: const TextStyle(
+                  color: Color(0xFF1A237E),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
               ),
             ),
-          ),
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: Color(0xFF1A1F71),
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  Text(
-                    'Hello Again',
-                    style: GoogleFonts.raleway(
-                      textStyle: const TextStyle(
-                        color: Color(0xFF1A1F71),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 32,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  _emailAddress(),
-                  const SizedBox(height: 20),
-                  _password(),
-                  const SizedBox(height: 40),
-                  _signin(context),
-                  const SizedBox(height: 20),
-                  _googlesignin(context),
-                  const SizedBox(height: 20),
-                  _phonesignin(context),
-                  const SizedBox(height: 20),
-                  _signup(context),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _emailAddress() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Email Address',
-          style: GoogleFonts.raleway(
-            textStyle: const TextStyle(
-              color: Color(0xFF1A1F71),
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: _emailController,
-          decoration: InputDecoration(
-            filled: true,
-            hintText: 'example@email.com',
-            hintStyle: TextStyle(
-              color: const Color(0xFF1A1F71).withOpacity(0.5),
-              fontWeight: FontWeight.normal,
-              fontSize: 14,
-            ),
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _password() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Password',
-          style: GoogleFonts.raleway(
-            textStyle: const TextStyle(
-              color: Color(0xFF1A1F71),
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          obscureText: true,
-          controller: _passwordController,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _signin(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF1A1F71),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          elevation: 0,
-        ),
-        onPressed: () async {
-          await AuthService().signin(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-            context: context,
-          );
-        },
-        child: Text(
-          "Sign In",
-          style: GoogleFonts.raleway(
-            textStyle: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-          ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _googlesignin(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF1A1F71),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          elevation: 0,
-        ),
-        onPressed: () async {
-          await AuthService().signInWithGoogle(
-            context: context,
-          );
-        },
-        child: Text(
-          "Sign In With Google",
-          style: GoogleFonts.raleway(
-            textStyle: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _phonesignin(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF1A1F71),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          elevation: 0,
-        ),
-        onPressed: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => PhoneAuthPage()));
-        },
-        child: Text(
-          "Sign In With Phone Number",
-          style: GoogleFonts.raleway(
-            textStyle: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _signup(BuildContext context) {
+  Widget _signUpText(BuildContext context) {
     return Center(
       child: RichText(
         textAlign: TextAlign.center,
@@ -259,9 +204,9 @@ class Login extends StatelessWidget {
           children: [
             TextSpan(
               text: "New User? ",
-              style: GoogleFonts.raleway(
-                textStyle: TextStyle(
-                  color: const Color(0xFF1A1F71).withOpacity(0.7),
+              style: GoogleFonts.poppins(
+                textStyle: const TextStyle(
+                  color: Colors.white70,
                   fontWeight: FontWeight.normal,
                   fontSize: 16,
                 ),
@@ -269,9 +214,9 @@ class Login extends StatelessWidget {
             ),
             TextSpan(
               text: "Create Account",
-              style: GoogleFonts.raleway(
+              style: GoogleFonts.poppins(
                 textStyle: const TextStyle(
-                  color: Color(0xFF1A1F71),
+                  color: Colors.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                 ),

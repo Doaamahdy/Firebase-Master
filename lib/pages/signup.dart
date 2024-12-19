@@ -10,214 +10,151 @@ class Signup extends StatelessWidget {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();  // New username controller
+  final TextEditingController _usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background gradient
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFFE6EFF9),
-                  Color(0xFFAFD6FF),
-                ],
-              ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF1A237E),
+              Color(0xFF3949AB),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _backButton(context),
+                const SizedBox(height: 40),
+                _headerText(),
+                const SizedBox(height: 40),
+                _usernameField(),
+                const SizedBox(height: 20),
+                _emailField(),
+                const SizedBox(height: 20),
+                _passwordField(),
+                const SizedBox(height: 40),
+                _signUpButton(context),
+                const SizedBox(height: 40),
+                _signInText(context),
+              ],
             ),
           ),
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: Color(0xFF1A1F71),
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  Text(
-                    'Register Account',
-                    style: GoogleFonts.raleway(
-                      textStyle: const TextStyle(
-                        color: Color(0xFF1A1F71),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 32,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  _usernameField(),  // New username field
-                  const SizedBox(height: 20),
-                  _emailAddress(),
-                  const SizedBox(height: 20),
-                  _password(),
-                  const SizedBox(height: 40),
-                  _signup(context),
-                  const SizedBox(height: 20),
-                  _signin(context),
-                ],
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  // New username input field
+  Widget _backButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.pop(context),
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.2),
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+      ),
+    );
+  }
+
+  Widget _headerText() {
+    return Text(
+      'Create Account',
+      style: GoogleFonts.poppins(
+        textStyle: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 32,
+        ),
+      ),
+    );
+  }
+
   Widget _usernameField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Username',
-          style: GoogleFonts.raleway(
-            textStyle: const TextStyle(
-              color: Color(0xFF1A1F71),
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: _usernameController,
-          decoration: InputDecoration(
-            filled: true,
-            hintText: 'Your username',
-            hintStyle: TextStyle(
-              color: const Color(0xFF1A1F71).withOpacity(0.5),
-              fontWeight: FontWeight.normal,
-              fontSize: 14,
-            ),
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        )
-      ],
+    return _inputField(
+      controller: _usernameController,
+      hintText: 'Username',
+      icon: Icons.person_outline,
     );
   }
 
-  Widget _emailAddress() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Email Address',
-          style: GoogleFonts.raleway(
-            textStyle: const TextStyle(
-              color: Color(0xFF1A1F71),
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: _emailController,
-          decoration: InputDecoration(
-            filled: true,
-            hintText: 'example@email.com',
-            hintStyle: TextStyle(
-              color: const Color(0xFF1A1F71).withOpacity(0.5),
-              fontWeight: FontWeight.normal,
-              fontSize: 14,
-            ),
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        )
-      ],
+  Widget _emailField() {
+    return _inputField(
+      controller: _emailController,
+      hintText: 'Email Address',
+      icon: Icons.email_outlined,
     );
   }
 
-  Widget _password() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Password',
-          style: GoogleFonts.raleway(
-            textStyle: const TextStyle(
-              color: Color(0xFF1A1F71),
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          obscureText: true,
-          controller: _passwordController,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        )
-      ],
+  Widget _passwordField() {
+    return _inputField(
+      controller: _passwordController,
+      hintText: 'Password',
+      icon: Icons.lock_outline,
+      isPassword: true,
     );
   }
 
-  Widget _signup(BuildContext context) {
+  Widget _inputField({
+    required TextEditingController controller,
+    required String hintText,
+    required IconData icon,
+    bool isPassword = false,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: TextField(
+        controller: controller,
+        obscureText: isPassword,
+        style: const TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          prefixIcon: Icon(icon, color: Colors.white70),
+          hintText: hintText,
+          hintStyle: const TextStyle(color: Colors.white70),
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        ),
+      ),
+    );
+  }
+
+  Widget _signUpButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 56,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF1A1F71),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           elevation: 0,
         ),
         onPressed: () async {
-          // Call signup method with the username, email, and password
           await AuthService().signup(
             email: _emailController.text.trim(),
             password: _passwordController.text.trim(),
-            /////////////////////
             username: _usernameController.text.trim(),
-            //////////////////// Pass the username
             context: context,
           );
         },
         child: Text(
           "Sign Up",
-          style: GoogleFonts.raleway(
+          style: GoogleFonts.poppins(
             textStyle: const TextStyle(
-              color: Colors.white,
+              color: Color(0xFF1A237E),
               fontWeight: FontWeight.w600,
               fontSize: 16,
             ),
@@ -227,7 +164,7 @@ class Signup extends StatelessWidget {
     );
   }
 
-  Widget _signin(BuildContext context) {
+  Widget _signInText(BuildContext context) {
     return Center(
       child: RichText(
         textAlign: TextAlign.center,
@@ -235,9 +172,9 @@ class Signup extends StatelessWidget {
           children: [
             TextSpan(
               text: "Already Have Account? ",
-              style: GoogleFonts.raleway(
-                textStyle: TextStyle(
-                  color: const Color(0xFF1A1F71).withOpacity(0.7),
+              style: GoogleFonts.poppins(
+                textStyle: const TextStyle(
+                  color: Colors.white70,
                   fontWeight: FontWeight.normal,
                   fontSize: 16,
                 ),
@@ -245,9 +182,9 @@ class Signup extends StatelessWidget {
             ),
             TextSpan(
               text: "Log In",
-              style: GoogleFonts.raleway(
+              style: GoogleFonts.poppins(
                 textStyle: const TextStyle(
-                  color: Color(0xFF1A1F71),
+                  color: Colors.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                 ),
@@ -274,7 +211,7 @@ class UserModel {
 
   const UserModel({this.username, this.email, this.password});
 
-  tojson() {
+  Map<String, dynamic> toJson() {
     return {"username": username, "email": email, "password": password};
   }
 

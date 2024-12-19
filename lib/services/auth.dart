@@ -30,8 +30,8 @@ class AuthService {
 
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
       );
 
       // Once signed in, return the UserCredential
@@ -60,7 +60,7 @@ class AuthService {
         }
       }
 
-      final displayName = user?.displayName; // Get the username
+     
 
       // Navigate to Home after successful sign-in
       Navigator.pushReplacement(

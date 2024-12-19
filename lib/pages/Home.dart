@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app_1/pages/splash.dart';
 import '../services/auth.dart';
 import 'channels.dart';
 import 'users.dart';
@@ -11,39 +12,32 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background gradient
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFFE6EFF9),
-                  Color(0xFFAFD6FF),
-                ],
-              ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF1A237E),
+              Color(0xFF3949AB),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(),
+                const SizedBox(height: 40),
+                _buildActionCards(context),
+                const Spacer(),
+                _buildLogoutButton(context),
+              ],
             ),
           ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                children: [
-                  // Header section
-                  _buildHeader(),
-                  const SizedBox(height: 40),
-                  // Action cards
-                  _buildActionCards(context),
-                  const Spacer(),
-                  // Logout button
-                  _buildLogoutButton(context),
-                ],
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -57,9 +51,9 @@ class Home extends StatelessWidget {
       children: [
         Text(
           'Welcome Back',
-          style: GoogleFonts.raleway(
+          style: GoogleFonts.poppins(
             textStyle: const TextStyle(
-              color: Color(0xFF1A1F71),
+              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 32,
             ),
@@ -68,11 +62,11 @@ class Home extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           email,
-          style: GoogleFonts.raleway(
+          style: GoogleFonts.poppins(
             textStyle: TextStyle(
-              color: const Color(0xFF1A1F71).withOpacity(0.7),
+              color: Colors.white.withOpacity(0.7),
               fontWeight: FontWeight.w500,
-              fontSize: 20,
+              fontSize: 18,
             ),
           ),
         ),
@@ -99,7 +93,7 @@ class Home extends StatelessWidget {
           Icons.chat_bubble_outline,
           () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ChannelsPage()),
+            MaterialPageRoute(builder: (context) => const ChannelsPage()),
           ),
         ),
       ],
@@ -110,37 +104,30 @@ class Home extends StatelessWidget {
       BuildContext context, String title, IconData icon, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
-      child: Card(
-        shape: RoundedRectangleBorder(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.1),
           borderRadius: BorderRadius.circular(12),
         ),
-        elevation: 2,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Row(
-            children: [
-              Icon(icon, size: 32, color: const Color(0xFF1A1F71)),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  title,
-                  style: GoogleFonts.raleway(
-                    textStyle: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Color(0xFF1A1F71),
-                    ),
+        child: Row(
+          children: [
+            Icon(icon, size: 32, color: Colors.white),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                title,
+                style: GoogleFonts.poppins(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: Colors.white,
                   ),
                 ),
               ),
-              const Icon(Icons.arrow_forward_ios,
-                  size: 16, color: Color(0xFF1A1F71)),
-            ],
-          ),
+            ),
+            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.white),
+          ],
         ),
       ),
     );
@@ -152,18 +139,24 @@ class Home extends StatelessWidget {
       height: 56,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF1A1F71),
-          foregroundColor: Colors.white,
+          backgroundColor: Colors.white,
+          foregroundColor: const Color(0xFF1A237E),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+          elevation: 0,
         ),
         onPressed: () async {
           await AuthService().signout(context: context);
+          Navigator.pushReplacement(
+            // ignore: use_build_context_synchronously
+            context,
+            MaterialPageRoute(builder: (context) => const SplashScreen()),
+          );
         },
         child: Text(
           "Sign Out",
-          style: GoogleFonts.raleway(
+          style: GoogleFonts.poppins(
             textStyle: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 16,

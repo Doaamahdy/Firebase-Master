@@ -7,18 +7,18 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.notifications,
               size: 80,
               color: Colors.blueAccent,
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             Text(
               "Welcome to Notification App",
               style: TextStyle(
@@ -27,8 +27,8 @@ class SplashScreen extends StatelessWidget {
                 color: Colors.blueAccent,
               ),
             ),
-            const SizedBox(height: 10),
-            const CircularProgressIndicator(),
+            SizedBox(height: 10),
+            CircularProgressIndicator(),
           ],
         ),
       ),

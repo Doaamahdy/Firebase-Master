@@ -5,7 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'firebase_options.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
 
 // Function to handle foreground notifications
 void foregroundNotificationHandler(RemoteMessage message) async {
@@ -13,7 +13,7 @@ void foregroundNotificationHandler(RemoteMessage message) async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-   
+
     // Save message to Firebase Realtime Database
     DatabaseReference messagesRef = FirebaseDatabase.instance.ref("messages");
     await messagesRef.push().set({
@@ -21,8 +21,6 @@ void foregroundNotificationHandler(RemoteMessage message) async {
       'body': message.notification?.body ?? "No body",
       'date': message.sentTime?.toString() ?? "No date",
     });
-
-    print("Message saved to Firebase");
 
     // Show local notification
     if (message.notification != null) {
@@ -35,7 +33,7 @@ void foregroundNotificationHandler(RemoteMessage message) async {
             'default_channel_id', // Channel ID
             'Default Channel', // Channel Name
             channelDescription:
-            'Your notification description', // Channel Description
+                'Your notification description', // Channel Description
             importance: Importance.high,
             priority: Priority.high,
             showWhen: false,
@@ -43,9 +41,8 @@ void foregroundNotificationHandler(RemoteMessage message) async {
         ),
       );
     }
-  } catch (e) {
-    print("Error saving notification: ${e.toString()}");
-  }
+    // ignore: empty_catches
+  } catch (e) {}
 }
 
 // Background notification handler
@@ -57,14 +54,13 @@ Future<void> backgroundNotificationHandler(RemoteMessage message) async {
     );
 
     DatabaseReference notificationsRef =
-    FirebaseDatabase.instance.ref("notifications");
+        FirebaseDatabase.instance.ref("notifications");
     await notificationsRef.push().set({
       'title': message.notification?.title ?? "No title",
       'body': message.notification?.body ?? "No body",
       'date': message.sentTime?.toString() ?? "No date",
     });
 
-  // ignore: empty_catches
-  } catch (e) {
-  }
+    // ignore: empty_catches
+  } catch (e) {}
 }

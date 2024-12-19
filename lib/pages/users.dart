@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/user.dart';
 import '../services/users.dart';
 
+
 class UsersPage extends StatelessWidget {
   final service = UserService();
   UsersPage({super.key});
@@ -12,34 +13,26 @@ class UsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          _buildBackground(),
-          SafeArea(
-            child: Column(
-              children: [
-                _buildAppBar(context),
-                Expanded(
-                  child: _buildUserList(),
-                ),
-              ],
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF1A237E),
+              Color(0xFF3949AB),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBackground() {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFFE6EFF9),
-            Color(0xFFAFD6FF),
-          ],
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              _buildAppBar(context),
+              Expanded(
+                child: _buildUserList(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -47,17 +40,7 @@ class UsersPage extends StatelessWidget {
 
   Widget _buildAppBar(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Row(
         children: [
           GestureDetector(
@@ -65,12 +48,12 @@ class UsersPage extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: const Color(0xFFE6EFF9),
+                color: Colors.white.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: const Icon(
                 Icons.arrow_back_ios_new_rounded,
-                color: Color(0xFF1A1F71),
+                color: Colors.white,
                 size: 20,
               ),
             ),
@@ -78,11 +61,11 @@ class UsersPage extends StatelessWidget {
           const SizedBox(width: 16),
           Text(
             'Users',
-            style: GoogleFonts.raleway(
+            style: GoogleFonts.poppins(
               textStyle: const TextStyle(
-                color: Color(0xFF1A1F71),
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 24,
               ),
             ),
           ),
@@ -96,16 +79,16 @@ class UsersPage extends StatelessWidget {
       future: service.getUsers(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: Colors.white));
         }
 
         if (snapshot.hasError) {
           return Center(
             child: Text(
               'Error: ${snapshot.error}',
-              style: GoogleFonts.raleway(
+              style: GoogleFonts.poppins(
                 textStyle: const TextStyle(
-                  color: Color(0xFF1A1F71),
+                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
@@ -117,9 +100,9 @@ class UsersPage extends StatelessWidget {
           return Center(
             child: Text(
               'No users found.',
-              style: GoogleFonts.raleway(
+              style: GoogleFonts.poppins(
                 textStyle: const TextStyle(
-                  color: Color(0xFF1A1F71),
+                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
@@ -145,24 +128,17 @@ class UsersPage extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
       ),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: const Color(0xFF1A1F71).withOpacity(0.1),
+          backgroundColor: Colors.white.withOpacity(0.2),
           child: Text(
             user.username?[0].toUpperCase() ?? '?',
-            style: GoogleFonts.raleway(
+            style: GoogleFonts.poppins(
               textStyle: const TextStyle(
-                color: Color(0xFF1A1F71),
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -170,20 +146,20 @@ class UsersPage extends StatelessWidget {
         ),
         title: Text(
           user.username ?? 'No Name',
-          style: GoogleFonts.raleway(
+          style: GoogleFonts.poppins(
             textStyle: const TextStyle(
-              color: Color(0xFF1A1F71),
-              fontSize: 14,
+              color: Colors.white,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
         subtitle: Text(
           user.email ?? 'No Email',
-          style: GoogleFonts.raleway(
-            textStyle: const TextStyle(
-              color: Colors.black54,
-              fontSize: 12,
+          style: GoogleFonts.poppins(
+            textStyle: TextStyle(
+              color: Colors.white.withOpacity(0.7),
+              fontSize: 14,
             ),
           ),
         ),
@@ -197,7 +173,7 @@ class UsersPage extends StatelessWidget {
               "${user.username} deleted!",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.redAccent.withOpacity(0.1),
-              colorText: Colors.red,
+              colorText: Colors.white,
             );
           },
         ),
@@ -205,3 +181,4 @@ class UsersPage extends StatelessWidget {
     );
   }
 }
+

@@ -1,37 +1,4 @@
-/*import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:notify/splash_screen.dart';
-import 'firebase_options.dart';
-import 'notification_handler.dart';
-import 'home_page.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  // Handle foreground and background notifications
-  FirebaseMessaging.onMessage.listen(foregroundNotificationHandler);
-  FirebaseMessaging.onBackgroundMessage(backgroundNotificationHandler);
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      //home: MyHomePage(),
-      home: SplashToHome(),
-    );
-  }
-}
-
-*/
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +37,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return const GetMaterialApp(
       home: SplashScreen(),
     );
   }
@@ -81,8 +48,8 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
         child: Scaffold(
-            body: Center(child: const Text('Welcome to my home page'))));
+            body: Center(child: Text('Welcome to my home page'))));
   }
 }

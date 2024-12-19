@@ -4,6 +4,16 @@ class AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
   /// Logs a custom event for when a user subscribes
+  Future<void> firtstLoginEvent({required String userId, String? planType}) async {
+    await _analytics.logEvent(
+      name: 'first_login',
+      parameters: {
+        'user_id': userId,
+        'plan_type': planType ?? 'free', // Defaults to free if no plan type is specified
+      },
+    );
+  }
+  /// Logs a custom event for when a user subscribes
   Future<void> logSubscribeEvent({required String userId, String? planType}) async {
     await _analytics.logEvent(
       name: 'subscribe',

@@ -12,6 +12,7 @@ class ChatPage extends StatefulWidget {
   const ChatPage({Key? key, required this.channelId}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _ChatPageState createState() => _ChatPageState();
 }
 
@@ -168,7 +169,8 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _buildMessageBubble(MessageModel message) {
-    final isCurrentUser = message.userId == FirebaseAuth.instance.currentUser?.uid;
+    final isCurrentUser =
+        message.userId == FirebaseAuth.instance.currentUser?.uid;
     return Align(
       alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -193,7 +195,9 @@ class _ChatPageState extends State<ChatPage> {
                 message.username ?? 'Unknown User',
                 style: GoogleFonts.raleway(
                   textStyle: TextStyle(
-                    color: isCurrentUser ? Colors.white70 : const Color(0xFF1A1F71),
+                    color: isCurrentUser
+                        ? Colors.white70
+                        : const Color(0xFF1A1F71),
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),
@@ -257,7 +261,8 @@ class _ChatPageState extends State<ChatPage> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               ),
             ),
           ),

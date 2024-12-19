@@ -29,7 +29,8 @@ class _ChannelsPageState extends State<ChannelsPage> {
 
     _fetchUserId();
   }
-    @override
+
+  @override
   void dispose() {
     // Suppress FIAM when leaving the screen
     FirebaseInAppMessaging.instance.setMessagesSuppressed(true);
@@ -97,6 +98,7 @@ class _ChannelsPageState extends State<ChannelsPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(24),
                     child: Column(
+                      //backgrouncolor:Colors.white,////
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
@@ -296,6 +298,7 @@ class _ChannelsPageState extends State<ChannelsPage> {
                                   imagePath: _selectedImage,
                                 );
                                 await service.addChannel(newChannel);
+                                // ignore: use_build_context_synchronously
                                 Navigator.of(context).pop();
                               },
                               style: ElevatedButton.styleFrom(
@@ -378,6 +381,8 @@ class _ChannelsPageState extends State<ChannelsPage> {
           label: Text(
             'Delete',
             style: GoogleFonts.raleway(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
               textStyle: const TextStyle(color: Colors.red),
             ),
           ),
@@ -409,13 +414,15 @@ class _ChannelsPageState extends State<ChannelsPage> {
           },
           icon: Icon(
             isSubscribed ? Icons.unsubscribe : Icons.subscriptions,
-            color: isSubscribed ? Colors.orange : const Color(0xFF1A1F71),
+            color: isSubscribed ? Colors.orange : const Color(0xFF00FF00),
           ),
           label: Text(
             isSubscribed ? 'Unsubscribe' : 'Subscribe',
             style: GoogleFonts.raleway(
               textStyle: TextStyle(
-                color: isSubscribed ? Colors.orange : const Color(0xFF1A1F71),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: isSubscribed ? Colors.orange : const Color(0xFF00FF00),
               ),
             ),
           ),
@@ -438,13 +445,15 @@ class _ChannelsPageState extends State<ChannelsPage> {
           },
           icon: const Icon(
             Icons.chat,
-            color: Color(0xFF1A1F71),
+            color: Colors.green,
           ),
           label: Text(
             'Chat',
             style: GoogleFonts.raleway(
               textStyle: const TextStyle(
-                color: Color(0xFF1A1F71),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
               ),
             ),
           ),
@@ -457,7 +466,7 @@ class _ChannelsPageState extends State<ChannelsPage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF3949AB), //.withOpacity(0.7),//////////
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -474,7 +483,7 @@ class _ChannelsPageState extends State<ChannelsPage> {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             child: Image.asset(
               'assets/images/${channel.imagePath}',
-              height: 120,
+              height: 220,
               width: double.infinity,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
@@ -501,20 +510,20 @@ class _ChannelsPageState extends State<ChannelsPage> {
                   channel.title ?? 'No Title',
                   style: GoogleFonts.raleway(
                     textStyle: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF1A1F71),
-                    ),
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        // color: Color(0xFF1A1F71),
+                        color: Colors.white),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   channel.description ?? 'No Description',
                   style: GoogleFonts.raleway(
-                    textStyle: TextStyle(
-                      fontSize: 14,
-                      color: const Color(0xFF1A1F71).withOpacity(0.7),
-                    ),
+                    textStyle: const TextStyle(
+                        fontSize: 16,
+                        // color: const Color(0xFF1A1F71).withOpacity(0.7),
+                        color: Colors.white),
                   ),
                 ),
                 const SizedBox(height: 16),
